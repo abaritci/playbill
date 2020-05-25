@@ -1,0 +1,25 @@
+#Login {
+  button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
+    color: #ffffff;
+    text-transform: none;
+    width: 300px;
+    border-radius: 20px;
+  }
+  .MuiGrid-root.MuiGrid-container.MuiGrid-align-items-xs-center.MuiGrid-justify-xs-center {
+    margin-top: 10px;
+  }
+  button.MuiButtonBase-root.MuiButton-root.MuiButton-outlined {
+    text-transform: none;
+    border: none;
+    box-shadow: 0px 0px 2px -1px grey;
+  }
+  .MuiButton-containedPrimary {
+    background-color: #4caf50;
+  }
+  .MuiButton-containedPrimary:hover {
+    background-color: #388e3c;
+  }
+  .MuiButton-containedPrimary:focus {
+    outline: none;
+  }
+}

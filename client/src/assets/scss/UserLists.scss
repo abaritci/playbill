@@ -1,0 +1,19 @@
+#users-list {
+  h6.MuiTypography-root.makeStyles-title-120.MuiTypography-h6 {
+    text-align: center;
+  }
+  ul.MuiList-root.MuiList-padding {
+    height: 350px;
+    overflow: auto;
+  }
+}
+#add-user {
+  a.MuiButtonBase-root.MuiButton-root.MuiButton-outlined {
+    width: 100%;
+    background-color: #f7f7fa;
+    border: none;
+    border-radius: 3px;
+    color: #7e7e82;
+    text-transform: none;
+  }
+}

@@ -1,0 +1,16 @@
+#navbar {
+  .MuiPaper-root.MuiCard-root.MuiPaper-outlined.MuiPaper-rounded {
+    border: none;
+  }
+  nav {
+    background-color: #ffffff;
+    border-bottom: 1px solid #f3ebeb;
+  }
+  button.MuiButtonBase-root.MuiButton-root.MuiButton-outlined {
+    background-color: #f7f7fa;
+    border: none;
+    border-radius: 10px;
+    color: #7e7e82;
+    text-transform: none;
+  }
+}
