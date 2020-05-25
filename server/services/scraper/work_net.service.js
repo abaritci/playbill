@@ -9,29 +9,34 @@ const WorkNetService = {
     site: 'https://www.worknet.am',
     getJobs() {
         return new Promise((resolve, reject) => {
-            request(`${this.site}/en/jobs`, (error, response, body) => {
+            request(`${this.site}/en/jobs`, async (error, response, body) => {
 
                 if (!error) {
                     //load HTML body with current page
                     const $ = cheerio.load(body);
-                    const item = $(".web_item_card");
+                    const item = $(".listview").find(".card");
                     let jobs = [];
                     if (item.length) {
                         let index = 0;
                         while (index < item.length) {
-                            const logo = $(item[index]).find("img").attr('data-original'),
-                                page = this.site + $(item[index]).find("a").first().attr('href'),
-                                title = $(item[index]).find(".font_bold").text().trim(),
-                                name = $(item[index]).find(".job_list_company_title").text().trim(),
-                                deadline = moment($(item[index]).find(".job-list-deadline > p").first().text().trim()).format('DD MMMM YYYY'),
-                                location = $(item[index]).find(".job_location").text().trim();
-                            jobs.push({
-                                title,
-                                company: {name, logo},
-                                page,
-                                deadline,
-                                location
-                            });
+                            if ($(item[index]).find("a").attr('href')) {
+                                const page = encodeURI(this.site + $(item[index]).find("a").attr('href'));
+                                const jobPageHTML = await this.getJobPage(page);
+                                const logo = this.site + jobPageHTML("div.logo").find("img").attr('src'),
+                                    title = jobPageHTML('header.content__title').find('h1').text().trim(),
+                                    name = jobPageHTML('.profile__info').find('a').first().text().trim(),
+                                    deadline = 'Opened',//moment(jobPageHTML('.lead').text().trim()).format('DD MMMM YYYY'),
+                                    location = jobPageHTML('.zmdi-pin').parent().text().trim();
+                                if (title && name && logo && page && deadline) {
+                                    jobs.push({
+                                        title,
+                                        company: {name, logo},
+                                        page: decodeURI(page),
+                                        deadline,
+                                        location
+                                    });
+                                }
+                            }
                             index++;
                         }
                     }
@@ -45,10 +50,7 @@ const WorkNetService = {
     getJobPage(page) {
         return new Promise((resolve, reject) => {
             request(page, (error, response, body) => {
-
                 if (!error) {
-                    //load HTML body with current page
-                    const $ = cheerio.load(body);
                     return resolve(cheerio.load(body));
                 } else {
                     reject('Page not found');
@@ -74,3 +76,6 @@ const WorkNetService = {
 }
 
 module.exports = implement(ScrapInterface)(WorkNetService);
+
+
+

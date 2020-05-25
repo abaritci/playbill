@@ -14,7 +14,7 @@ const MyJobService = {
             const instance = await phantom.create();
             const page = await instance.createPage();
             await page.on('onResourceRequested', function (requestData) {
-                console.info('Requesting', requestData.url);
+                //console.info('Requesting', requestData.url);
             });
             const status = await page.open(this.site);
             const content = await page.property('content');
@@ -32,13 +32,15 @@ const MyJobService = {
                             name = $(item[index]).find(".shortJobCompany").text().trim(),
                             deadline = moment($(item[index]).find(".shortJobOpening").text().trim().substring(12), "DD/MM/YYYY").add(parseInt($(item[index]).find(".shortJobDeadline").text().trim().substring(17)), 'day').format('DD MMMM YYYY'),
                             location = $(item[index]).find(".shortJobAddress").text().trim();
-                        jobs.push({
-                            title,
-                            company: {name, logo},
-                            page,
-                            deadline,
-                            location
-                        });
+                        if (title && name && page) {
+                            jobs.push({
+                                title,
+                                company: {name, logo},
+                                page,
+                                deadline,
+                                location
+                            });
+                        }
                         index++;
                     }
                 }

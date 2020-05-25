@@ -25,13 +25,15 @@ const CareerCenterService = {
                                 name = $(item[index]).find(".job-item-info-text > h6").text().trim(),
                                 deadline = moment($(item[index]).find(".job-item-info-date > span").text().trim()).format('DD MMMM YYYY'),
                                 location = 'Yerevan';
-                            jobs.push({
-                                title,
-                                company: {name, logo},
-                                page,
-                                deadline,
-                                location
-                            });
+                            if (title && name && logo && page && deadline) {
+                                jobs.push({
+                                    title,
+                                    company: {name, logo},
+                                    page,
+                                    deadline,
+                                    location
+                                });
+                            }
                             index++;
                         }
                     }

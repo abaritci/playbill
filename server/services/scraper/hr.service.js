@@ -28,13 +28,15 @@ const HRService = {
                                 name = $(item[index]).find(".info > div.company").text().trim(),
                                 deadline = $(item[index]).find(".deadline > span").text().trim(),
                                 location = 'Yerevan';
-                            jobs.push({
-                                title,
-                                company: {name, logo},
-                                page,
-                                deadline,
-                                location
-                            });
+                            if (title && name && logo && page && deadline) {
+                                jobs.push({
+                                    title,
+                                    company: {name, logo},
+                                    page,
+                                    deadline,
+                                    location
+                                });
+                            }
                             index++;
                         }
                     }

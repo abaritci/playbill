@@ -25,13 +25,15 @@ const StaffService = {
                                 name = $(item[index]).find(".job_list_company_title").text().trim(),
                                 deadline = moment($(item[index]).find(".job-list-deadline > p").first().text().trim()).format('DD MMMM YYYY'),
                                 location = $(item[index]).find(".job_location").text().trim();
-                            jobs.push({
-                                title,
-                                company: {name, logo},
-                                page,
-                                deadline,
-                                location
-                            });
+                            if (title && name && logo && page && deadline) {
+                                jobs.push({
+                                    title,
+                                    company: {name, logo},
+                                    page,
+                                    deadline,
+                                    location
+                                });
+                            }
                             index++;
                         }
                     }

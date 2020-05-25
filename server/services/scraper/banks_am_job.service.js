@@ -9,29 +9,34 @@ const BanksAmJobService = {
     site: 'https://job.banks.am',
     getJobs() {
         return new Promise((resolve, reject) => {
-            request(`${this.site}/am`, (error, response, body) => {
+            request(`${this.site}/am/search`, async (error, response, body) => {
 
                 if (!error) {
                     //load HTML body with current page
                     const $ = cheerio.load(body);
-                    const item = $(".web_item_card");
+                    const item = $("div#home").find('.col-sm-6');
                     let jobs = [];
                     if (item.length) {
                         let index = 0;
                         while (index < item.length) {
-                            const logo = $(item[index]).find("img").attr('data-original'),
-                                page = this.site + $(item[index]).find("a").first().attr('href'),
-                                title = $(item[index]).find(".font_bold").text().trim(),
-                                name = $(item[index]).find(".job_list_company_title").text().trim(),
-                                deadline = moment($(item[index]).find(".job-list-deadline > p").first().text().trim()).format('DD MMMM YYYY'),
-                                location = $(item[index]).find(".job_location").text().trim();
-                            jobs.push({
-                                title,
-                                company: {name, logo},
-                                page,
-                                deadline,
-                                location
-                            });
+                            if ($(item[index]).find('a').attr('href')) {
+                                const page = this.site + $(item[index]).find('a').attr('href');
+                                const jobPageHTML = await this.getJobPage(page);
+                                const logo = this.site + jobPageHTML("div#home").find("img.img-responsive").attr('src'),
+                                    title = jobPageHTML('[for="position"]').next().children().text().trim(),
+                                    name = jobPageHTML('meta[name=description]').attr('content'),
+                                    deadline = moment(jobPageHTML('.lead').text().trim()).format('DD MMMM YYYY'),
+                                    location = jobPageHTML('[for="region"]')[0].next.next.children[1].children[0].data.trim();
+                                if (title && name && logo && page && deadline) {
+                                    jobs.push({
+                                        title,
+                                        company: {name, logo},
+                                        page,
+                                        deadline,
+                                        location
+                                    });
+                                }
+                            }
                             index++;
                         }
                     }
@@ -74,3 +79,4 @@ const BanksAmJobService = {
 }
 
 module.exports = implement(ScrapInterface)(BanksAmJobService);
+

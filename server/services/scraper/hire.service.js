@@ -14,27 +14,40 @@ const HireService = {
                 if (!error) {
                     //load HTML body with current page
                     const $ = cheerio.load(body);
-                    const item = $(".web_item_card");
+
+                    const content = $("div#content");
+                    const itemRow = content.find('.row');
+                    const itemRowAlt = content.find('.row-alt');
+
+                    const item = {...itemRow, ...itemRowAlt};
+
                     let jobs = [];
                     if (item.length) {
                         let index = 0;
                         while (index < item.length) {
-                            const logo = $(item[index]).find("img").attr('data-original'),
-                                page = this.site + $(item[index]).find("a").first().attr('href'),
-                                title = $(item[index]).find(".font_bold").text().trim(),
-                                name = $(item[index]).find(".job_list_company_title").text().trim(),
-                                deadline = moment($(item[index]).find(".job-list-deadline > p").first().text().trim()).format('DD MMMM YYYY'),
-                                location = $(item[index]).find(".job_location").text().trim();
-                            jobs.push({
-                                title,
-                                company: {name, logo},
-                                page,
-                                deadline,
-                                location
-                            });
+                            const fullInfo = $(item[index]).find(".row-info").text().trim();
+                            const companyAndLocation = fullInfo.split('at')[1].split('in');
+                            const logo = null,
+                                page = decodeURI($(item[index]).find("a").attr('href')),
+                                title = $(item[index]).find("a").attr('title').trim(),
+                                name = companyAndLocation[0].split(',')[0],
+                                deadline = moment($(item[index]).find(".time-posted").text().trim(), 'DD-MM-YYYY').format('DD MMMM YYYY'),
+                                location = companyAndLocation[1] || companyAndLocation[0].split(',')[1];
+                            if (title && name && page && deadline) {
+                                jobs.push({
+                                    title,
+                                    company: {
+                                        name: name.trim(), logo
+                                    },
+                                    page,
+                                    deadline,
+                                    location: location.trim()
+                                });
+                            }
                             index++;
                         }
                     }
+                    //console.log(jobs)
                     return resolve(jobs);
                 } else {
                     reject('Page not found');

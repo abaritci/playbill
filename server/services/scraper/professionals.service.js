@@ -28,17 +28,18 @@ const ProfessionalsService = {
                                 deadline = null,
                                 location = jobPageHTML('.address').text().trim();
 
-                            jobs.push({
-                                title,
-                                company: {name, logo},
-                                page,
-                                deadline,
-                                location
-                            });
+                            if (title && name && logo && page) {
+                                jobs.push({
+                                    title,
+                                    company: {name, logo},
+                                    page,
+                                    deadline,
+                                    location
+                                });
+                            }
                             index++;
                         }
                     }
-                    //console.log(jobs);
                     return resolve(jobs);
                 } else {
                     reject('Page not found');

@@ -29,14 +29,15 @@ const JobFinderService = {
                             const companyLogo = jobPageHTML('#ctl00_bdyPlaceHolde_jfpanelViewJob_jfJobPreview_imgCompanyLogoLink').attr('src');
 
                             const logo = companyLogo ? this.site + '/' + companyLogo : jobFinderIcon;
-
-                            jobs.push({
-                                title,
-                                company: {name, logo},
-                                page,
-                                deadline,
-                                location
-                            });
+                            if (title && name && logo && page && deadline) {
+                                jobs.push({
+                                    title,
+                                    company: {name, logo},
+                                    page,
+                                    deadline,
+                                    location
+                                });
+                            }
                             index += 2;
                         }
                     }

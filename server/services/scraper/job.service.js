@@ -25,13 +25,15 @@ const JobAmService = {
                                 name = $(item[index]).find(".company > a").text().trim(),
                                 deadline = null,
                                 location = $(item[index]).find(".justify-content-end > span.wordBreak").text().trim();
-                            jobs.push({
-                                title,
-                                company: {name, logo},
-                                page,
-                                deadline,
-                                location
-                            });
+                            if (title && name && logo && page) {
+                                jobs.push({
+                                    title,
+                                    company: {name, logo},
+                                    page,
+                                    deadline,
+                                    location
+                                });
+                            }
                             index++;
                         }
                     }

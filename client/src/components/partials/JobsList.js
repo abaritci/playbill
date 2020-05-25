@@ -12,6 +12,7 @@ import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar';
 import {deepOrange} from '@material-ui/core/colors';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import "../../assets/scss/Jobs.scss";
 
 const useStyles = makeStyles((theme) => (
     {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => (
         },
         img: {
             margin: 'auto',
-            display: 'block',
+            display: 'block !important',
             maxWidth: '100%',
             maxHeight: '100%',
         },
