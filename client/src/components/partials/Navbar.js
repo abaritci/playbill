@@ -14,6 +14,7 @@ import '../../assets/scss/Navbar.scss';
 import Grid from "@material-ui/core/Grid";
 import Search from "./Search";
 import AdvancedSearch from "./AdvancedSearch";
+import Logo from "../../assets/playbill.png";
 
 const styles = (theme) => (
     {
@@ -31,8 +32,25 @@ const styles = (theme) => (
         pos: {
             marginBottom: 12,
         },
-        header : {
-            padding : 5
+        header: {
+            padding: 5
+        },
+        logoLink: {
+            color: '#a72e2e',
+            fontWeight: 600,
+            "&:hover": {
+                color: '#4a1010',
+                textDecoration: 'none'
+            }
+        },
+        avatar: {
+            float: 'left'
+        },
+        info: {
+            margin: 10
+        },
+        profileInfo: {
+            marginLeft: 10
         }
     });
 
@@ -72,11 +90,20 @@ class Navbar extends Component {
             <div id='navbar'>
                 <nav className="navbar navbar-expand-lg navbar-light">
                     {isAuthenticated && <Grid container item xs={12}>
-                        <Grid item xs={5}>
+                        <Grid item xs={1}>
+                            <Card className={classes.root} variant="outlined">
+                                <Link className={classes.logoLink} to={'/'}>
+                                    <Avatar src={Logo} alt={'PlayBill'} className={classes.avatar}/>
+                                    <div className={classes.info}>PlayBill</div>
+                                </Link>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={3} className={classes.profileInfo}>
                             <Card className={classes.root} variant="outlined">
                                 <CardHeader
                                     avatar={
-                                        <Avatar src={user.avatar} alt={user.name} title={user.name} className={classes.avatar}/>
+                                        <Avatar src={user.avatar} alt={user.name} title={user.name}
+                                                className={classes.avatar}/>
                                     }
                                     title={user.firstName + ' ' + user.lastName}
                                     subheader={user.email}
