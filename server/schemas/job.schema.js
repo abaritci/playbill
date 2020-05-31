@@ -21,7 +21,7 @@ const JobSchema = new Schema({
         enum: ['full_time', 'part_time', 'training', 'fixed_term_contract', 'tender', 'internship', 'other'],
         default: 'full_time'
     },
-    terms : {
+    term : {
         type: String,
         enum: ['permanent', 'temporary', 'freelance', 'contract', 'internship','other'],
         default: 'permanent'
