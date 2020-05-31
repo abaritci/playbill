@@ -15,6 +15,7 @@ import Grid from "@material-ui/core/Grid";
 import Search from "./Search";
 import AdvancedSearch from "./AdvancedSearch";
 import Logo from "../../assets/playbill.png";
+import FadeMenu from "./FadeMenu";
 
 const styles = (theme) => (
     {
@@ -51,8 +52,17 @@ const styles = (theme) => (
         },
         profileInfo: {
             marginLeft: 10
+        },
+        menuItem: {
+            border: 'none',
+            borderRadius: 10,
+            color: '#7e7e82',
+            textTransform: 'none',
+            width: '100%',
+            textDecoration: 'none !important'
         }
-    });
+    })
+;
 
 class Navbar extends Component {
     onLogout(e) {
@@ -63,19 +73,6 @@ class Navbar extends Component {
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const {classes} = this.props;
-
-        const authLinks = (
-            <ul className="navbar-nav ml-auto">
-                <Button
-                    variant="outlined"
-                    className={classes.button}
-                    endIcon={<ExitToAppIcon/>}
-                    onClick={this.onLogout.bind(this)}
-                >
-                    Logout
-                </Button>
-            </ul>
-        )
         const guestLinks = (
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
@@ -90,7 +87,7 @@ class Navbar extends Component {
             <div id='navbar'>
                 <nav className="navbar navbar-expand-lg navbar-light">
                     {isAuthenticated && <Grid container item xs={12}>
-                        <Grid item xs={1}>
+                        <Grid item xs={3}>
                             <Card className={classes.root} variant="outlined">
                                 <Link className={classes.logoLink} to={'/'}>
                                     <Avatar src={Logo} alt={'PlayBill'} className={classes.avatar}/>
@@ -98,28 +95,19 @@ class Navbar extends Component {
                                 </Link>
                             </Card>
                         </Grid>
-                        <Grid item xs={3} className={classes.profileInfo}>
-                            <Card className={classes.root} variant="outlined">
-                                <CardHeader
-                                    avatar={
-                                        <Avatar src={user.avatar} alt={user.name} title={user.name}
-                                                className={classes.avatar}/>
-                                    }
-                                    title={user.firstName + ' ' + user.lastName}
-                                    subheader={user.email}
-                                    className={classes.header}
-                                />
-                            </Card>
-                        </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={6}>
                             <Search label={"Search Job"} search={(string) => this.searchJob(string)}/>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={2}>
                             <AdvancedSearch/>
                         </Grid>
                     </Grid>}
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        {isAuthenticated ? authLinks : guestLinks}
+                        {isAuthenticated ? <FadeMenu
+                            classes={classes}
+                            user={user}
+                            onLogout={this.onLogout.bind(this)}
+                        /> : guestLinks}
                     </div>
                 </nav>
             </div>

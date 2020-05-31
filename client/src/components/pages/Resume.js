@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {withStyles} from '@material-ui/core/styles';
 import CV from 'react-cv'
+import Navbar from "../partials/Navbar";
 
 const styles = (theme) => (
     {});
@@ -16,6 +17,9 @@ class Resume extends Component {
     render() {
         return (
             <div id='resume'>
+                <Navbar
+                    searchJob={(string) => {}}
+                />
                 <CV
                     personalData={{
                         name: 'Aren Amirjanyan',
