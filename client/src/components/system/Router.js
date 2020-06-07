@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import Jobs from "../pages/Jobs";
 import Resume from "../pages/Resume";
+import Pdf from "../pages/Pdf";
 import NotFoundPage from "../pages/404";
 import React, {Component} from "react";
 import {connect} from 'react-redux';
@@ -87,6 +88,7 @@ class Router extends Component {
         <PrivateRoute path="/dashboard" exact component={Dashboard} isLoggedIn={isLoggedIn}/>
         <PrivateRoute path="/jobs" exact component={Jobs} isLoggedIn={isLoggedIn}/>
         <PrivateRoute path="/resume" exact component={Resume} isLoggedIn={isLoggedIn}/>
+        <PrivateRoute path="/pdf" exact component={Pdf} isLoggedIn={isLoggedIn}/>
         <Route path="/404" exact component={NotFoundPage}/>
         <Redirect to='/404'/>
       </Switch>

@@ -47,6 +47,7 @@ export default function FadeMenu({classes, user, onLogout}) {
             >
                 <MenuItem><Link className={classes.menuItem} to="/jobs">Jobs</Link></MenuItem>
                 <MenuItem><Link className={classes.menuItem} to="/resume">Resume</Link></MenuItem>
+                <MenuItem><Link className={classes.menuItem} to="/pdf">Pdf</Link></MenuItem>
                 <MenuItem>
                     <Button
                         variant="outlined"
